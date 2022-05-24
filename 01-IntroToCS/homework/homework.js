@@ -13,7 +13,13 @@ function BinarioADecimal(num) {
 
 function DecimalABinario(num) {
   // tu codigo aca
-  
+  let contador = "";
+  while (num > 0) {
+    contador = num % 2 + contador;
+    num = Math.floor(num /2);
+  }
+  return contador;
+ 
   
 }
 
