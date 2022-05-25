@@ -60,18 +60,19 @@ function cacheFunction(cb) {
   squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) 
 
   */
- var cache = {};
+ var squarcache = {};
  return function(arg){
-   if(cache.hasOwnProperty(arg)){
-  return cache[arg];
+   if(squarcache.hasOwnProperty(arg)){
+  return squarcache[arg];
    }else {
-     cache[arg] = cb(arg)
+     squarcache[arg] = cb(arg)
+     return squarcache[arg];
    }
 }
-  
-}
-function multipicacion(n){
-  return n * n;
+//function multiplicacion (n){
+  //return n * n * n;
+//}
+
 }
 
 // Bind
@@ -91,30 +92,38 @@ function getNombre() {
   return this.nombre;
 }
 
+
 /*
   Ejercicio 3
 
   IMPORTANTE: no modificar el código de arriba (variables instructor y alumno, y función getNombre)
 
-  Usando el método bind() guardar, en las dos variables declaradas a continuación, dos funciones que actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
+  Usando el método bind() guardar, en las dos variables declaradas a continuación,
+  dos funciones que actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
 */
 
-let getNombreInstructor;
-let getNombreAlumno;
+let getNombreInstructor = getNombre.bind(instructor);
+let getNombreAlumno = getNombre.bind(alumno);
 
 /*
   Ejercicio 4
   
-  Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a continuación, tres funciones que retornen una cadena (string) y el delimitador especificado (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
+  Sin modificar la función crearCadena, 
+  usar bind para guardar, en las tres variables declaradas a continuación, 
+  tres funciones que retornen una cadena (string) y el delimitador especificado 
+  (asteriscos, guiones, y guiones bajos, respectivamente). 
+  Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - 
+  ya que los otros argumentos habrán sido "bindeados". 
 */
 
-function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
+function crearCadena (delimitadorIzquierda, delimitadorDerecha, cadena) {
   return delimitadorIzquierda + cadena + delimitadorDerecha;
 }
+let textoAsteriscos = crearCadena.bind(this, '*', '*');
 
-let textoAsteriscos;
-let textoGuiones;
-let textoUnderscore;
+let textoGuiones = crearCadena.bind(this, '-', '-');
+
+let textoUnderscore = crearCadena.bind(this, '_', '_');
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
