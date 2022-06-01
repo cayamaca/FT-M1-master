@@ -26,38 +26,34 @@ function Node(value) {
   this.value = value;
   this.next = null;
 }
-LinkedList.prototype.add = function(data){
-  let node = new Node(data);
-  current = this.head;
+LinkedList.prototype.add = function(v){
+  var newNode = new Node(v);
+  var current = this.head;
   if (!current){
-  //if(!current === null)
-  this.head = node;
-  this._length++;
-  return node;
+  this.head = newNode;
+  return;
   }
-  while (current.next){
+  while (current.next !== null){
     current = current.next;
   }
-  current.next = node;
-  return node;
+  current.next = newNode;
+  return;
 };
 LinkedList.prototype.remove = function(){
-  let current = this.head;
-  if (current === null) return null;
-  else if(current && !current.next){
-  let aux = current.value;
+  var current = this.head;
+  if (!current) return null;
+  if(current.next === null){
     this.head = null;
-    this._length--;
-    return aux;
+    return current.value;
+  }
 
     while(current.next.next){
-      current.next = current.next;
+      current = current.next;
     }
-    let aux2 = current.next.value;
+    let aux = current.next;
     current.next = null;
-    this._length--;
-    return aux;
-  }
+    return aux.value;
+  
 };
 LinkedList.prototype.search = function(value){
   if(this.head === null) return null;
@@ -90,7 +86,37 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+function HashTable() {
+  this.numBuckets = 35;
+  this.buckets = [];
+  }
+  HashTable.prototype.set = function (key, value){
+    if(typeof key !== "string") throw new TypeError('keys must be strings')
+    var index = this.hash(key)
+    if (!this.buckets[index]){
+      this.buckets[index] = {}
+    }
+    this.buckets[index][key] = value
+
+  }
+ HashTable.prototype.get = function(key) {
+  var index = this.hash(key)
+  return this.buckets[index][key]
+    
+  }
+  HashTable.prototype.hasKey = function(key) {
+    var index = this.hash(key);
+    return this.buckets[index].hasOwnProperty(key)
+    
+  }
+  HashTable.prototype.hash = function(v){
+    var res = 0;
+    for (let i = 0; i < v.length; i++){
+    res = res + v.charCodeAt(i);
+    }
+    return res % this.numBuckets;
+  }
+
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
